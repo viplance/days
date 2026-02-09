@@ -49,6 +49,7 @@ export default function HomeScreen() {
       const newCycle: Cycle = { id: uuidv4(), startDate: today };
       await Storage.saveCycle(newCycle);
       loadData();
+      router.push('/congrats');
     }
   };
 

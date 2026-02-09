@@ -92,7 +92,12 @@ export default function CalendarScreen() {
       // Check if open cycle exists? Warning?
       // Assuming simplified flow for now or user checks Warning manually.
       await Storage.saveCycle(newCycle);
-      router.push('/');
+
+      if (mode === 'start') {
+        router.push('/congrats');
+      } else {
+        router.push('/');
+      }
     }
   };
 

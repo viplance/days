@@ -64,8 +64,7 @@ export default function HomeScreen() {
       });
     } else {
       // Starting new cycle earlier
-      router.push({ pathname: '/calendar', params: { mode: 'calendar' } }); // Or 'start'
-      // Description says: "Calendar with a choice of consecutive days" -> selection of range.
+      router.push({ pathname: '/calendar', params: { mode: 'start' } }); // Or 'start'
     }
   };
 

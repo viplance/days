@@ -1,11 +1,11 @@
-import { format, parseISO } from "date-fns";
-import { useFocusEffect } from "expo-router";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { FlatList, Modal, Text, TouchableOpacity, View } from "react-native";
-import { Calendar } from "react-native-calendars";
-import { Colors } from "../src/constants/colors";
-import { Cycle, Storage } from "../src/utils/storage";
+import { eachDayOfInterval, format, isBefore, parseISO } from 'date-fns';
+import { useFocusEffect } from 'expo-router';
+import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FlatList, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Calendar } from 'react-native-calendars';
+import { Colors } from '../src/constants/colors';
+import { Cycle, Storage } from '../src/utils/storage';
 
 export default function HistoryScreen() {
   const { t } = useTranslation();
@@ -14,9 +14,32 @@ export default function HistoryScreen() {
   const [modalVisible, setModalVisible] = useState(false);
 
   // Editor state
-  const [editStartDate, setEditStartDate] = useState("");
-  const [editEndDate, setEditEndDate] = useState("");
+  const [editStartDate, setEditStartDate] = useState('');
+  const [editEndDate, setEditEndDate] = useState('');
   const [editingStart, setEditingStart] = useState(false); // Toggle which date to edit on calendar
+
+  const markedDates = useMemo(() => {
+    if (!editStartDate) return {};
+    const marks: Record<string, any> = {};
+
+    marks[editStartDate] = { selected: true, color: Colors.secondary };
+
+    if (editEndDate) {
+      const start = parseISO(editStartDate);
+      const end = parseISO(editEndDate);
+
+      if (!isBefore(end, start)) {
+        const days = eachDayOfInterval({ start, end });
+        days.forEach((day: Date) => {
+          const dateStr = format(day, 'yyyy-MM-dd');
+          marks[dateStr] = { selected: true, color: Colors.secondary };
+        });
+      } else {
+        marks[editEndDate] = { selected: true, color: Colors.secondary };
+      }
+    }
+    return marks;
+  }, [editStartDate, editEndDate]);
 
   const loadCycles = async () => {
     const data = await Storage.getCycles();
@@ -35,7 +58,7 @@ export default function HistoryScreen() {
   const openEditor = (cycle: Cycle) => {
     setSelectedCycle(cycle);
     setEditStartDate(cycle.startDate);
-    setEditEndDate(cycle.endDate || "");
+    setEditEndDate(cycle.endDate || '');
     setModalVisible(true);
     setEditingStart(true);
   };
@@ -59,7 +82,7 @@ export default function HistoryScreen() {
   return (
     <View className="flex-1 bg-background p-4">
       <Text className="text-2xl font-bold text-primary mb-6 text-center">
-        {t("history_title")}
+        {t('history_title')}
       </Text>
 
       <FlatList
@@ -73,13 +96,13 @@ export default function HistoryScreen() {
             <View className="w-3 h-3 rounded-full bg-secondary mr-4" />
             <View>
               <Text className="text-lg text-text font-medium">
-                {format(parseISO(item.startDate), "MMM dd")} -{" "}
+                {format(parseISO(item.startDate), 'MMM dd')} -{' '}
                 {item.endDate
-                  ? format(parseISO(item.endDate), "MMM dd")
-                  : "..."}
+                  ? format(parseISO(item.endDate), 'MMM dd')
+                  : '...'}
               </Text>
               <Text className="text-gray-400 text-sm">
-                {format(parseISO(item.startDate), "yyyy")}
+                {format(parseISO(item.startDate), 'yyyy')}
               </Text>
             </View>
           </TouchableOpacity>
@@ -97,18 +120,18 @@ export default function HistoryScreen() {
             <View className="flex-row justify-between mb-4">
               <TouchableOpacity
                 onPress={() => setEditingStart(true)}
-                className={`p-2 border-b-2 ${editingStart ? "border-primary" : "border-transparent"}`}
+                className={`p-2 border-b-2 ${editingStart ? 'border-primary' : 'border-transparent'}`}
               >
                 <Text className="text-gray-600">
-                  {t("period_start")}: {editStartDate}
+                  {t('period_start')}: {editStartDate}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setEditingStart(false)}
-                className={`p-2 border-b-2 ${!editingStart ? "border-primary" : "border-transparent"}`}
+                className={`p-2 border-b-2 ${!editingStart ? 'border-primary' : 'border-transparent'}`}
               >
                 <Text className="text-gray-600">
-                  {t("period_end")}: {editEndDate || "..."}
+                  {t('period_end')}: {editEndDate || '...'}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -121,10 +144,7 @@ export default function HistoryScreen() {
                 if (editingStart) setEditStartDate(day.dateString);
                 else setEditEndDate(day.dateString);
               }}
-              markedDates={{
-                [editStartDate]: { selected: true, color: Colors.secondary },
-                [editEndDate]: { selected: true, color: Colors.secondary },
-              }}
+              markedDates={markedDates}
               theme={{
                 selectedDayBackgroundColor: Colors.secondary,
                 todayTextColor: Colors.primary,
@@ -142,7 +162,7 @@ export default function HistoryScreen() {
                 onPress={saveEdit}
                 className="bg-primary p-3 px-6 rounded-lg"
               >
-                <Text className="text-white font-bold">{t("save")}</Text>
+                <Text className="text-white font-bold">{t('save')}</Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -17,6 +17,12 @@ It also supports SCSS modules via `react-native-sass-transformer`.
     pnpm start
     ```
 
+3.  **Debug the app in web browser:**
+
+    ```bash
+    pnpm dev
+    ```
+
 In the output, you'll find options to open the app in a
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)

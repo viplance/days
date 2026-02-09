@@ -4,7 +4,6 @@
   "yes": "Yes",
   "earlier": "Earlier",
   "check_days": "Check days",
-  "select_days": "Select 6 consecutive days.",
   "save": "Save",
   "history_title": "Cycle History",
   "congrats_title": "Congratulations on this new milestone!",
@@ -21,5 +20,7 @@
   "delete_confirmation_title": "Delete Cycle",
   "delete_confirmation_message": "Are you sure you want to delete this cycle entry?",
   "cancel": "Cancel",
-  "delete": "Delete"
+  "delete": "Delete",
+  "cycle_day": "Cycle Day {{day}}",
+  "edit_cycle": "Edit Cycle"
 }

@@ -4,7 +4,6 @@
   "yes": "Sí",
   "earlier": "Antes",
   "check_days": "Revisar días",
-  "select_days": "Selecciona 6 días consecutivos.",
   "save": "Guardar",
   "history_title": "Historial del ciclo",
   "congrats_title": "¡Felicidades por este nuevo hito!",
@@ -21,5 +20,7 @@
   "delete_confirmation_title": "Eliminar ciclo",
   "delete_confirmation_message": "¿Estás seguro de que deseas eliminar esta entrada?",
   "cancel": "Cancelar",
-  "delete": "Eliminar"
+  "delete": "Eliminar",
+  "cycle_day": "Día {{day}} del ciclo",
+  "edit_cycle": "Editar ciclo"
 }

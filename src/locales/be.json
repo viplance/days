@@ -4,7 +4,6 @@
   "yes": "Так",
   "earlier": "Раней",
   "check_days": "Правер дні",
-  "select_days": "Выберыце 6 дзён запар.",
   "save": "Захаваць",
   "history_title": "Гісторыя цыклаў",
   "congrats_title": "Віншуем з гэтай важнай падзеяй!",
@@ -21,5 +20,7 @@
   "delete_confirmation_title": "Выдаліць запіс",
   "delete_confirmation_message": "Вы ўпэўненыя, што жадаеце выдаліць гэты запіс?",
   "cancel": "Адмяніць",
-  "delete": "Выдаліць"
+  "delete": "Выдаліць",
+  "cycle_day": "У цябе {{day}} дзень цыкла",
+  "edit_cycle": "Рэдагаваць цыкл"
 }

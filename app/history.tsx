@@ -1,4 +1,11 @@
-import { eachDayOfInterval, format, isBefore, parseISO } from 'date-fns';
+import {
+  differenceInDays,
+  eachDayOfInterval,
+  format,
+  isBefore,
+  parseISO,
+  startOfDay,
+} from 'date-fns';
 import { useFocusEffect } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -104,7 +111,7 @@ export default function HistoryScreen() {
             className="bg-white p-4 mb-2 rounded-lg flex-row items-center shadow-sm"
           >
             <View className="w-3 h-3 rounded-full bg-secondary mr-4" />
-            <View>
+            <View className="flex-1">
               <Text className="text-lg text-text font-medium">
                 {format(parseISO(item.startDate), 'MMM dd')} -{' '}
                 {item.endDate
@@ -115,6 +122,17 @@ export default function HistoryScreen() {
                 {format(parseISO(item.startDate), 'yyyy')}
               </Text>
             </View>
+            {item.id === cycles[0]?.id && !item.endDate && (
+              <Text className="text-secondary font-medium text-right">
+                {t('cycle_day', {
+                  day:
+                    differenceInDays(
+                      startOfDay(new Date()),
+                      startOfDay(parseISO(item.startDate)),
+                    ) + 1,
+                })}
+              </Text>
+            )}
           </TouchableOpacity>
         )}
       />
@@ -124,7 +142,7 @@ export default function HistoryScreen() {
         <View className="flex-1 bg-black/50 justify-center p-4">
           <View className="bg-white rounded-xl p-4 shadow-lg h-5/6">
             <Text className="text-xl font-bold text-center mb-4">
-              Edit Cycle
+              {t('edit_cycle')}
             </Text>
 
             <View className="flex-row justify-between mb-4">

@@ -4,7 +4,6 @@
   "yes": "Да",
   "earlier": "Раньше",
   "check_days": "Проверь дни",
-  "select_days": "Выберите 6 последовательных дней.",
   "save": "Сохранить",
   "history_title": "История циклов",
   "congrats_title": "Поздравляем с этим важным событием!",
@@ -21,5 +20,7 @@
   "delete_confirmation_title": "Удалить запись",
   "delete_confirmation_message": "Вы уверены, что хотите удалить эту запись?",
   "cancel": "Отмена",
-  "delete": "Удалить"
+  "delete": "Удалить",
+  "cycle_day": "У тебя {{day}} день цикла",
+  "edit_cycle": "Редактировать цикл"
 }

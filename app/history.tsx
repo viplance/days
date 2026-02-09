@@ -7,6 +7,7 @@ import {
   parseISO,
   startOfDay,
 } from 'date-fns';
+import { be, enUS, es, ru, uk } from 'date-fns/locale';
 import { useFocusEffect } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,8 +17,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { Colors } from '../src/constants/colors';
 import { Cycle, Storage } from '../src/utils/storage';
 
+const locales: Record<string, any> = { be, en: enUS, es, ru, uk };
+
 export default function HistoryScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLocale = locales[i18n.language] || enUS;
   const [cycles, setCycles] = useState<Cycle[]>([]);
   const [selectedCycle, setSelectedCycle] = useState<Cycle | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -149,9 +153,14 @@ export default function HistoryScreen() {
             />
             <View className="flex-1">
               <Text className="text-lg text-text font-medium">
-                {format(parseISO(item.startDate), 'MMM dd')} -{' '}
+                {format(parseISO(item.startDate), 'MMM dd', {
+                  locale: currentLocale,
+                })}{' '}
+                -{' '}
                 {item.endDate
-                  ? format(parseISO(item.endDate), 'MMM dd')
+                  ? format(parseISO(item.endDate), 'MMM dd', {
+                      locale: currentLocale,
+                    })
                   : '...'}
               </Text>
               <Text className="text-gray-400 text-sm">

@@ -12,6 +12,7 @@ export default function HistoryScreen() {
   const [cycles, setCycles] = useState<Cycle[]>([]);
   const [selectedCycle, setSelectedCycle] = useState<Cycle | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   // Editor state
   const [editStartDate, setEditStartDate] = useState('');
@@ -76,7 +77,16 @@ export default function HistoryScreen() {
   };
 
   const deleteCycle = async () => {
-    // Implement delete if needed, skipping for minimalism
+    if (!selectedCycle) return;
+    setDeleteModalVisible(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!selectedCycle) return;
+    await Storage.deleteCycle(selectedCycle.id);
+    setDeleteModalVisible(false);
+    setModalVisible(false);
+    loadCycles();
   };
 
   return (
@@ -151,18 +161,56 @@ export default function HistoryScreen() {
               }}
             />
 
-            <View className="flex-row justify-end mt-4">
+            <View className="flex-row justify-between items-center mt-4">
+              <TouchableOpacity onPress={deleteCycle} className="p-3">
+                <Text className="text-red-500 font-medium">{t('delete')}</Text>
+              </TouchableOpacity>
+              <View className="flex-row">
+                <TouchableOpacity
+                  onPress={() => setModalVisible(false)}
+                  className="mr-4 p-3"
+                >
+                  <Text className="text-gray-500">{t('cancel')}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={saveEdit}
+                  className="bg-primary p-3 px-6 rounded-lg"
+                >
+                  <Text className="text-white font-bold">{t('save')}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal visible={deleteModalVisible} animationType="fade" transparent>
+        <View className="flex-1 bg-black/50 justify-center items-center p-4">
+          <View className="bg-white rounded-xl p-6 w-full max-w-sm shadow-xl">
+            <Text className="text-xl font-bold text-center mb-2 text-gray-900">
+              {t('delete_confirmation_title')}
+            </Text>
+            <Text className="text-gray-600 text-center mb-6 text-base">
+              {t('delete_confirmation_message')}
+            </Text>
+
+            <View className="flex-row gap-3">
               <TouchableOpacity
-                onPress={() => setModalVisible(false)}
-                className="mr-4 p-3"
+                onPress={() => setDeleteModalVisible(false)}
+                className="flex-1 p-3 rounded-lg bg-gray-100 items-center active:bg-gray-200"
               >
-                <Text className="text-gray-500">Cancel</Text>
+                <Text className="text-gray-700 font-semibold text-base">
+                  {t('cancel')}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={saveEdit}
-                className="bg-primary p-3 px-6 rounded-lg"
+                onPress={confirmDelete}
+                className="flex-1 p-3 rounded-lg bg-red-500 items-center active:bg-red-600"
               >
-                <Text className="text-white font-bold">{t('save')}</Text>
+                <Text className="text-white font-semibold text-base">
+                  {t('delete')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

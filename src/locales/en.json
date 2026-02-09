@@ -16,5 +16,10 @@
   "select_language": "Select Language",
   "period_start": "Period Start",
   "period_end": "Period End",
-  "language_changed": "Language changed successfully"
+  "language_changed": "Language changed successfully",
+  "delete_period": "Delete period",
+  "delete_confirmation_title": "Delete Cycle",
+  "delete_confirmation_message": "Are you sure you want to delete this cycle entry?",
+  "cancel": "Cancel",
+  "delete": "Delete"
 }

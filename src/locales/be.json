@@ -16,5 +16,10 @@
   "select_language": "Абярыце мову",
   "period_start": "Пачатак",
   "period_end": "Канец",
-  "language_changed": "Мова паспяхова зменена"
+  "language_changed": "Мова паспяхова зменена",
+  "delete_period": "Выдаліць перыяд",
+  "delete_confirmation_title": "Выдаліць запіс",
+  "delete_confirmation_message": "Вы ўпэўненыя, што жадаеце выдаліць гэты запіс?",
+  "cancel": "Адмяніць",
+  "delete": "Выдаліць"
 }

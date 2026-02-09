@@ -16,5 +16,10 @@
   "select_language": "Seleccionar idioma",
   "period_start": "Inicio",
   "period_end": "Fin",
-  "language_changed": "Idioma cambiado con éxito"
+  "language_changed": "Idioma cambiado con éxito",
+  "delete_period": "Eliminar período",
+  "delete_confirmation_title": "Eliminar ciclo",
+  "delete_confirmation_message": "¿Estás seguro de que deseas eliminar esta entrada?",
+  "cancel": "Cancelar",
+  "delete": "Eliminar"
 }

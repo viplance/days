@@ -36,6 +36,13 @@ export const Storage = {
     await AsyncStorage.setItem(CYCLE_KEY, JSON.stringify(cycles));
   },
 
+  async deleteCycle(id: string): Promise<void> {
+    const cycles = await this.getCycles();
+    const updatedCycles = cycles.filter((c) => c.id !== id);
+    await this.saveCycles(updatedCycles);
+  },
+
+
   async getLanguage(): Promise<string | null> {
     return await AsyncStorage.getItem(LANGUAGE_KEY);
   },

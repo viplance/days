@@ -44,6 +44,7 @@ export default function HomeScreen() {
       const updatedCycle = { ...lastCycle, endDate: today };
       await Storage.saveCycle(updatedCycle);
       loadData(); // Refresh state
+      router.push('/history');
     } else {
       // Starting new cycle
       const newCycle: Cycle = { id: uuidv4(), startDate: today };

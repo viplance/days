@@ -1,0 +1,20 @@
+{
+  "start_question": "¡Hola! ¿Ha comenzado tu periodo hoy?",
+  "end_question": "¡Hola! ¿Ha terminado tu periodo hoy?",
+  "yes": "Sí",
+  "earlier": "Antes",
+  "check_days": "Revisar días",
+  "select_days": "Selecciona 6 días consecutivos.",
+  "save": "Guardar",
+  "history_title": "Historial del ciclo",
+  "congrats_title": "¡Felicidades por este nuevo hito!",
+  "congrats_body": "Tu cuerpo ahora puede hacer cosas increíbles oficialmente. Es una señal de que estás creciendo y haciéndote más fuerte. Recuerda, esto es completamente natural, y miles de millones de mujeres increíbles en todo el mundo pasan por esto. Escúchate a ti misma, sé amable contigo misma y sabe que siempre estoy aquí si necesitas charlar, elegir las cosas correctas en la tienda o simplemente compartir una barra entera de chocolate. ¡Bienvenida a nuestro club!",
+  "understand_button": "Gracias, entiendo",
+  "warning_missing_end": "No has completado el último día de tu periodo.",
+  "check": "Revisar",
+  "history": "Historial",
+  "select_language": "Seleccionar idioma",
+  "period_start": "Inicio",
+  "period_end": "Fin",
+  "language_changed": "Idioma cambiado con éxito"
+}

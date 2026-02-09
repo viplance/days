@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import {
   differenceInDays,
   eachDayOfInterval,
@@ -11,6 +12,7 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Modal, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+import { v4 as uuidv4 } from 'uuid';
 import { Colors } from '../src/constants/colors';
 import { Cycle, Storage } from '../src/utils/storage';
 
@@ -73,6 +75,15 @@ export default function HistoryScreen() {
     setEditingStart(true);
   };
 
+  const handleNewCycle = () => {
+    const today = format(new Date(), 'yyyy-MM-dd');
+    const newCycle: Cycle = {
+      id: uuidv4(),
+      startDate: today,
+    };
+    openEditor(newCycle);
+  };
+
   const saveEdit = async () => {
     if (!selectedCycle) return;
     const updated = {
@@ -116,9 +127,14 @@ export default function HistoryScreen() {
 
   return (
     <View className="flex-1 bg-background p-4">
-      <Text className="text-2xl font-bold text-primary mb-6 text-center">
-        {t('history_title')}
-      </Text>
+      <View className="flex-row items-center justify-between mb-6">
+        <Text className="text-2xl font-bold text-primary">
+          {t('history_title')}
+        </Text>
+        <TouchableOpacity onPress={handleNewCycle}>
+          <Ionicons name="add-circle" size={32} color={Colors.primary} />
+        </TouchableOpacity>
+      </View>
 
       <FlatList
         data={cycles}

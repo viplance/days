@@ -3,7 +3,12 @@ import { Image } from 'expo-image';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text, TouchableOpacity, View } from 'react-native'; // Alert as fallback
+import {
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native'; // Alert as fallback
 import { v4 as uuidv4 } from 'uuid';
 // import ScssExample from "../src/components/ScssExample";
 import { Cycle, Storage } from '../src/utils/storage';
@@ -11,6 +16,7 @@ import { Cycle, Storage } from '../src/utils/storage';
 export default function HomeScreen() {
   const { t } = useTranslation();
   const router = useRouter();
+  const { height } = useWindowDimensions();
   const [lastCycle, setLastCycle] = useState<Cycle | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -77,12 +83,14 @@ export default function HomeScreen() {
       {/* Header handled by _layout but we can add title if needed? Designed as simple screen. */}
 
       <View className="flex-1 justify-center items-center">
-        <Image
-          source={require('../assets/images/enotix-logo.svg')}
-          style={{ width: 150, height: 150 }}
-          contentFit="contain"
-          className="mb-8"
-        />
+        {height > 600 && (
+          <Image
+            source={require('../assets/images/enotix-logo.svg')}
+            style={{ width: 150, height: 150 }}
+            contentFit="contain"
+            className="mb-8"
+          />
+        )}
         <Text className="text-3xl font-bold text-center text-text mb-10">
           {isPeriodActive ? t('end_question') : t('start_question')}
         </Text>

@@ -23,6 +23,12 @@ It also supports SCSS modules via `react-native-sass-transformer`.
     pnpm dev
     ```
 
+4.  **Build the static web app:**
+
+    ```bash
+    pnpm build
+    ```
+
 In the output, you'll find options to open the app in a
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)

@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { Image } from 'expo-image';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -77,6 +78,12 @@ export default function HomeScreen() {
       {/* Header handled by _layout but we can add title if needed? Designed as simple screen. */}
 
       <View className="flex-1 justify-center items-center">
+        <Image
+          source={require('../assets/images/enotix-logo.svg')}
+          style={{ width: 150, height: 150 }}
+          contentFit="contain"
+          className="mb-8"
+        />
         <Text className="text-3xl font-bold text-center text-text mb-10">
           {isPeriodActive ? t('end_question') : t('start_question')}
         </Text>

@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -16,7 +17,13 @@ export default function CongratsScreen() {
     <View className="flex-1 bg-background p-6 justify-center items-center">
       {/* Decorative background lines could be SVG or Images, skipping for minimalism */}
 
-      <View className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm">
+      <View className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm items-center">
+        <Image
+          source={require('../assets/images/enotix-logo.svg')}
+          style={{ width: 100, height: 100 }}
+          contentFit="contain"
+          className="mb-4"
+        />
         <Text className="text-2xl font-bold text-primary mb-6 text-center">
           {t('congrats_title')}
         </Text>

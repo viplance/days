@@ -11,11 +11,11 @@ import ru from './locales/ru.json';
 import uk from './locales/uk.json';
 
 export const LANGUAGES = [
-  { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'ru', name: 'Русский', flag: '🇷🇺' },
-  { code: 'be', name: 'Беларуская', flag: '⬜🟥⬜' }, // Custom representation if needed, using emojis here
-  { code: 'uk', name: 'Українська', flag: '🇺🇦' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'be', name: 'Беларуская', flag: require('../assets/flags/be.png') },
+  { code: 'en', name: 'English', flag: require('../assets/flags/en.png') },
+  { code: 'es', name: 'Español', flag: require('../assets/flags/es.png') },
+  { code: 'ru', name: 'Русский', flag: require('../assets/flags/ru.png') },
+  { code: 'uk', name: 'Українська', flag: require('../assets/flags/uk.png') },
 ];
 
 const resources = {
@@ -28,9 +28,11 @@ const resources = {
 
 const initI18n = async () => {
   const savedLanguage = await Storage.getLanguage();
-  const deviceLanguage = Localization.getLocales()[0]?.languageCode || 'en';
+  const systemLanguage = Localization.getLocales()
+    .map((locale) => locale.languageCode)
+    .find((code) => code && Object.keys(resources).includes(code));
 
-  const languageToUse = savedLanguage || (Object.keys(resources).includes(deviceLanguage) ? deviceLanguage : 'en');
+  const languageToUse = savedLanguage || systemLanguage || 'en';
 
   i18n.use(initReactI18next).init({
     resources,

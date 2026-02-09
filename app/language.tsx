@@ -1,11 +1,12 @@
-import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import i18n from "i18next";
-import { useTranslation } from "react-i18next";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import { Colors } from "../src/constants/colors";
-import { LANGUAGES } from "../src/i18n";
-import { Storage } from "../src/utils/storage";
+import { Ionicons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
+import i18n from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { Colors } from '../src/constants/colors';
+import { LANGUAGES } from '../src/i18n';
+import { Storage } from '../src/utils/storage';
 
 export default function LanguageScreen() {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ export default function LanguageScreen() {
   return (
     <View className="flex-1 bg-background p-6">
       <Text className="text-xl font-bold text-text mb-6 text-center">
-        {t("select_language")}
+        {t('select_language')}
       </Text>
       <FlatList
         data={LANGUAGES}
@@ -31,7 +32,13 @@ export default function LanguageScreen() {
             className="flex-row items-center justify-between p-4 mb-2 bg-white rounded-lg shadow-sm"
           >
             <View className="flex-row items-center">
-              <Text className="text-2xl mr-4">{item.flag}</Text>
+              <View className="w-8 h-8 mr-4 overflow-hidden rounded-full">
+                <Image
+                  source={item.flag}
+                  className="w-full h-full"
+                  contentFit="cover"
+                />
+              </View>
               <Text className="text-lg text-text">{item.name}</Text>
             </View>
             {i18n.language === item.code && (

@@ -99,6 +99,19 @@ export default function HistoryScreen() {
     loadCycles();
   };
 
+  const getCycleDay = (id: number) => {
+    const startDate = cycles[id].startDate;
+    const endDate = cycles[id - 1]?.startDate || new Date().toISOString();
+
+    const day =
+      differenceInDays(
+        startOfDay(parseISO(endDate)),
+        startOfDay(parseISO(startDate)),
+      ) + 1;
+
+    return t('cycle_day', { day });
+  };
+
   return (
     <View className="flex-1 bg-background p-4">
       <Text className="text-2xl font-bold text-primary mb-6 text-center">
@@ -127,17 +140,9 @@ export default function HistoryScreen() {
                 {format(parseISO(item.startDate), 'yyyy')}
               </Text>
             </View>
-            {item.id === cycles[0]?.id && !item.endDate && (
-              <Text className="text-secondary font-medium text-right">
-                {t('cycle_day', {
-                  day:
-                    differenceInDays(
-                      startOfDay(new Date()),
-                      startOfDay(parseISO(item.startDate)),
-                    ) + 1,
-                })}
-              </Text>
-            )}
+            <Text className="text-secondary font-medium text-right">
+              {getCycleDay(index)}
+            </Text>
           </TouchableOpacity>
         )}
       />

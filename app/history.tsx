@@ -109,7 +109,9 @@ export default function HistoryScreen() {
         startOfDay(parseISO(startDate)),
       ) + 1;
 
-    return t('cycle_day', { day });
+    return cycles[id - 1]?.startDate
+      ? t('days', { count: day })
+      : t('cycle_day', { day });
   };
 
   return (
@@ -140,7 +142,9 @@ export default function HistoryScreen() {
                 {format(parseISO(item.startDate), 'yyyy')}
               </Text>
             </View>
-            <Text className="text-secondary font-medium text-right">
+            <Text
+              className={`${index === 0 ? 'text-secondary' : 'text-gray-400'} font-medium text-right`}
+            >
               {getCycleDay(index)}
             </Text>
           </TouchableOpacity>

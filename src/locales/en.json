@@ -22,5 +22,7 @@
   "cancel": "Cancel",
   "delete": "Delete",
   "cycle_day": "Cycle Day {{day}}",
+  "days_one": "{{count}} day",
+  "days_other": "{{count}} days",
   "edit_cycle": "Edit Cycle"
 }

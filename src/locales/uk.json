@@ -22,5 +22,8 @@
   "cancel": "Скасувати",
   "delete": "Видалити",
   "cycle_day": "У тебе {{day}} день циклу",
+  "days_one": "{{count}} день",
+  "days_few": "{{count}} дні",
+  "days_many": "{{count}} днів",
   "edit_cycle": "Редагувати цикл"
 }

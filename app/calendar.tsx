@@ -31,7 +31,7 @@ export default function CalendarScreen() {
     } else if (selectedStartDate && !selectedEndDate) {
       if (isBefore(parseISO(day.dateString), parseISO(selectedStartDate))) {
         setSelectedStartDate(day.dateString);
-      } else {
+      } else if (day.dateString !== selectedStartDate) {
         setSelectedEndDate(day.dateString);
       }
     }

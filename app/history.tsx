@@ -66,7 +66,9 @@ export default function HistoryScreen() {
   const openEditor = (cycle: Cycle) => {
     setSelectedCycle(cycle);
     setEditStartDate(cycle.startDate);
-    setEditEndDate(cycle.endDate || '');
+    setEditEndDate(
+      cycle.endDate && cycle.endDate > cycle.startDate ? cycle.endDate : '',
+    );
     setModalVisible(true);
     setEditingStart(true);
   };
@@ -76,7 +78,8 @@ export default function HistoryScreen() {
     const updated = {
       ...selectedCycle,
       startDate: editStartDate,
-      endDate: editEndDate || undefined,
+      endDate:
+        editEndDate && editEndDate > editStartDate ? editEndDate : undefined,
     };
     await Storage.saveCycle(updated);
     setModalVisible(false);
@@ -171,8 +174,20 @@ export default function HistoryScreen() {
                 editingStart ? editStartDate : editEndDate || editStartDate
               }
               onDayPress={(day) => {
-                if (editingStart) setEditStartDate(day.dateString);
-                else setEditEndDate(day.dateString);
+                const date = day.dateString;
+                if (editingStart) {
+                  // Start cannot be >= end
+                  if (editEndDate && date >= editEndDate) {
+                    return;
+                  }
+                  setEditStartDate(date);
+                } else {
+                  // End cannot be <= start
+                  if (date <= editStartDate) {
+                    return;
+                  }
+                  setEditEndDate(date);
+                }
               }}
               markedDates={markedDates}
               theme={{

@@ -27,10 +27,6 @@ export default function HomeScreen() {
       setLastCycle(null);
     }
 
-    const hasSeenCongrats = await Storage.hasSeenCongrats();
-    if (!hasSeenCongrats && cycles.length === 0) {
-      router.push('/congrats');
-    }
     setLoading(false);
   };
 

@@ -105,12 +105,14 @@ export default function HistoryScreen() {
       <FlatList
         data={cycles}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <TouchableOpacity
             onPress={() => openEditor(item)}
             className="bg-white p-4 mb-2 rounded-lg flex-row items-center shadow-sm"
           >
-            <View className="w-3 h-3 rounded-full bg-secondary mr-4" />
+            <View
+              className={`w-3 h-3 rounded-full mr-4 ${index === 0 ? 'bg-secondary' : 'bg-gray-400'}`}
+            />
             <View className="flex-1">
               <Text className="text-lg text-text font-medium">
                 {format(parseISO(item.startDate), 'MMM dd')} -{' '}

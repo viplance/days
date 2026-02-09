@@ -106,7 +106,6 @@ export default function CalendarScreen() {
       <Text className="text-2xl font-bold text-center text-primary mb-2">
         {t('check_days')}
       </Text>
-      <Text className="text-center text-gray-500 mb-6">{t('select_days')}</Text>
 
       <Calendar
         onDayPress={onDayPress}

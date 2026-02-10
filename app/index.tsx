@@ -1,4 +1,5 @@
-import { format } from 'date-fns';
+import { Cycle } from '@/src/types/cycle.type';
+import { differenceInDays, format, parseISO, startOfDay } from 'date-fns';
 import { Image } from 'expo-image';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
@@ -10,8 +11,7 @@ import {
   View,
 } from 'react-native'; // Alert as fallback
 import { v4 as uuidv4 } from 'uuid';
-// import ScssExample from "../src/components/ScssExample";
-import { Cycle, Storage } from '../src/utils/storage';
+import { Storage } from '../src/utils/storage';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
@@ -22,7 +22,9 @@ export default function HomeScreen() {
 
   const loadData = async () => {
     setLoading(true);
+
     const cycles = await Storage.getCycles();
+
     if (cycles.length > 0) {
       // Sort by startDate desc
       cycles.sort(
@@ -35,6 +37,21 @@ export default function HomeScreen() {
     }
 
     setLoading(false);
+
+    // Handle redirect logic
+    if (cycles.length > 0) {
+      const startDate = cycles[0].startDate;
+      const endDate = cycles[0].endDate;
+      const today = format(new Date(), 'yyyy-MM-dd');
+      const dayFromStart = differenceInDays(
+        startOfDay(parseISO(today)),
+        startOfDay(parseISO(startDate)),
+      );
+
+      if (endDate && dayFromStart < 20) {
+        router.push({ pathname: '/history', params: {} });
+      }
+    }
   };
 
   useFocusEffect(

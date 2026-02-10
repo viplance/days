@@ -1,10 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-export interface Cycle {
-  id: string;
-  startDate: string;
-  endDate?: string;
-}
+import { Cycle } from '../types/cycle.type';
 
 const CYCLE_KEY = 'days_cycles';
 const CONGRATS_KEY = 'days_congrats_seen';

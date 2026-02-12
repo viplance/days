@@ -18,6 +18,7 @@ import { Colors } from '../src/constants/colors';
 import { Cycle, Storage } from '../src/utils/storage';
 
 const locales: Record<string, any> = { be, en: enUS, es, ru, uk };
+const today = format(new Date(), 'yyyy-MM-dd');
 
 type EditMode = 'start' | 'end' | 'start-end';
 
@@ -244,6 +245,7 @@ export default function HistoryScreen() {
             </Text>
 
             <Calendar
+              maxDate={today}
               current={editStartDate}
               onDayPress={(day) => handleDayPress(day.dateString)}
               markedDates={markedDates}

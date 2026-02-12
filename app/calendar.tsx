@@ -13,6 +13,8 @@ export default function CalendarScreen() {
   const router = useRouter();
   const { mode, cycleId } = useLocalSearchParams();
 
+  const today = format(new Date(), 'yyyy-MM-dd');
+
   const [selectedStartDate, setSelectedStartDate] = useState<string | null>(
     null,
   );
@@ -163,6 +165,7 @@ export default function CalendarScreen() {
       </Text>
 
       <Calendar
+        maxDate={today}
         onDayPress={onDayPress}
         markedDates={getMarkedDates()}
         markingType={'period'}

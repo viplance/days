@@ -1,6 +1,6 @@
 import { eachDayOfInterval, format, parseISO } from 'date-fns';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Calendar, DateData } from 'react-native-calendars';
@@ -20,6 +20,21 @@ export default function CalendarScreen() {
   // For start-end mode: tracks click sequence
   const [clickCount, setClickCount] = useState(0);
 
+  // In 'end' mode, load the existing cycle's start date so we can show it
+  useEffect(() => {
+    if (mode === 'end' && cycleId) {
+      const loadCycleStart = async () => {
+        const cId = Array.isArray(cycleId) ? cycleId[0] : cycleId;
+        const cycles = await Storage.getCycles();
+        const cycle = cycles.find((c) => c.id === cId);
+        if (cycle) {
+          setSelectedStartDate(cycle.startDate);
+        }
+      };
+      loadCycleStart();
+    }
+  }, [mode, cycleId]);
+
   const onDayPress = useCallback(
     (day: DateData) => {
       const dateString = day.dateString;
@@ -32,8 +47,11 @@ export default function CalendarScreen() {
       }
 
       if (mode === 'end') {
-        // End-only mode: select end date only
-        setSelectedStartDate(dateString);
+        // End-only mode: select end date, start is already loaded
+        if (selectedStartDate && dateString <= selectedStartDate) {
+          return; // End must be after start
+        }
+        setSelectedEndDate(dateString);
         return;
       }
 
@@ -109,13 +127,13 @@ export default function CalendarScreen() {
 
   const handleSave = async () => {
     if (mode === 'end') {
-      if (!selectedStartDate) return;
-      // Update existing cycle
+      if (!selectedEndDate) return;
+      // Update existing cycle with selected end date
       const cId = Array.isArray(cycleId) ? cycleId[0] : cycleId;
       const cycles = await Storage.getCycles();
       const cycle = cycles.find((c) => c.id === cId);
       if (cycle) {
-        cycle.endDate = selectedStartDate;
+        cycle.endDate = selectedEndDate;
         await Storage.saveCycle(cycle);
       }
       router.push('/');

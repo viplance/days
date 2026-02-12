@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { Colors } from '../src/constants/colors';
 import { LANGUAGES } from '../src/i18n';
+import { updateCalendarLocale } from '../src/utils/calendar-i18n';
 import { Storage } from '../src/utils/storage';
 
 export default function LanguageScreen() {
@@ -14,6 +15,7 @@ export default function LanguageScreen() {
 
   const changeLanguage = async (langCode: string) => {
     await i18n.changeLanguage(langCode);
+    updateCalendarLocale(langCode);
     await Storage.setLanguage(langCode);
     router.back();
   };

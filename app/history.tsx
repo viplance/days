@@ -188,18 +188,6 @@ export default function HistoryScreen() {
       : t('cycle_day', { day });
   };
 
-  // Helper to get the label showing which field is being edited
-  const getEditHint = () => {
-    if (editMode === 'start') {
-      return `${t('period_start')}: ${editStartDate}`;
-    }
-    if (editMode === 'end') {
-      return `${t('period_start')}: ${editStartDate}  →  ${t('period_end')}: ${editEndDate || '...'}`;
-    }
-    // start-end mode
-    return `${t('period_start')}: ${editStartDate}  →  ${t('period_end')}: ${editEndDate || '...'}`;
-  };
-
   return (
     <View className="flex-1 bg-background p-4">
       <View className="flex-row items-center justify-between mb-6">
@@ -254,11 +242,6 @@ export default function HistoryScreen() {
             <Text className="text-xl font-bold text-center mb-4">
               {t('edit_cycle')}
             </Text>
-
-            {/* Date summary (read-only, no toggle buttons) */}
-            <View className="flex-row justify-center mb-4">
-              <Text className="text-gray-600 text-center">{getEditHint()}</Text>
-            </View>
 
             <Calendar
               current={editStartDate}

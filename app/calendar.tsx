@@ -1,6 +1,6 @@
-import { eachDayOfInterval, format, isBefore, parseISO } from 'date-fns';
+import { eachDayOfInterval, format, parseISO } from 'date-fns';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Calendar, DateData } from 'react-native-calendars';
@@ -17,25 +17,64 @@ export default function CalendarScreen() {
     null,
   );
   const [selectedEndDate, setSelectedEndDate] = useState<string | null>(null);
+  // For start-end mode: tracks click sequence
+  const [clickCount, setClickCount] = useState(0);
 
-  const onDayPress = (day: DateData) => {
-    if (mode === 'end') {
-      setSelectedStartDate(day.dateString); // Only need one date
-      return;
-    }
+  const onDayPress = useCallback(
+    (day: DateData) => {
+      const dateString = day.dateString;
 
-    // Range selection
-    if (!selectedStartDate || (selectedStartDate && selectedEndDate)) {
-      setSelectedStartDate(day.dateString);
-      setSelectedEndDate(null);
-    } else if (selectedStartDate && !selectedEndDate) {
-      if (isBefore(parseISO(day.dateString), parseISO(selectedStartDate))) {
-        setSelectedStartDate(day.dateString);
-      } else if (day.dateString !== selectedStartDate) {
-        setSelectedEndDate(day.dateString);
+      if (mode === 'start') {
+        // Start-only mode: select a single day
+        setSelectedStartDate(dateString);
+        setSelectedEndDate(null);
+        return;
       }
-    }
-  };
+
+      if (mode === 'end') {
+        // End-only mode: select end date only
+        setSelectedStartDate(dateString);
+        return;
+      }
+
+      // start-end mode (or default): sequential click logic
+      if (clickCount === 0) {
+        // First click: set start date
+        setSelectedStartDate(dateString);
+        setSelectedEndDate(null);
+        setClickCount(1);
+      } else if (clickCount === 1) {
+        // Second click: set end date (must be after start)
+        if (selectedStartDate && dateString <= selectedStartDate) {
+          // If before or same as start, treat as new start
+          setSelectedStartDate(dateString);
+          setSelectedEndDate(null);
+          // Stay at clickCount 1
+        } else {
+          setSelectedEndDate(dateString);
+          setClickCount(2);
+        }
+      } else {
+        // Subsequent clicks: alternate between start and end
+        if (clickCount % 2 === 0) {
+          // Edit start
+          if (selectedEndDate && dateString >= selectedEndDate) {
+            return; // Start must be before end
+          }
+          setSelectedStartDate(dateString);
+          setClickCount(clickCount + 1);
+        } else {
+          // Edit end
+          if (selectedStartDate && dateString <= selectedStartDate) {
+            return; // End must be after start
+          }
+          setSelectedEndDate(dateString);
+          setClickCount(clickCount + 1);
+        }
+      }
+    },
+    [mode, selectedStartDate, selectedEndDate, clickCount],
+  );
 
   const getMarkedDates = () => {
     const marks: any = {};
@@ -89,8 +128,6 @@ export default function CalendarScreen() {
         endDate: selectedEndDate || undefined,
       };
 
-      // Check if open cycle exists? Warning?
-      // Assuming simplified flow for now or user checks Warning manually.
       await Storage.saveCycle(newCycle);
 
       if (mode === 'start') {

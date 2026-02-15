@@ -25,6 +25,10 @@
   "days_one": "{{count}} day",
   "days_other": "{{count}} days",
   "edit_cycle": "Edit Cycle",
+  "already_selected_in_other_cycle": "You have already selected this day in another cycle.",
+  "cannot_select_future_date": "You cannot select a future date.",
+  "end_must_be_after_start": "The end date must be after the start date.",
+  "start_must_be_before_end": "The start date must be before the end date.",
   "calendar": {
     "monthNames": [
       "January",

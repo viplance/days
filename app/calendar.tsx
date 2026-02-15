@@ -6,7 +6,8 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Calendar, DateData } from 'react-native-calendars';
 import { v4 as uuidv4 } from 'uuid';
 import { Colors } from '../src/constants/colors';
-import { Cycle, Storage } from '../src/utils/storage';
+import { Cycle } from '../src/types/cycle.type';
+import { Storage } from '../src/utils/storage';
 
 export default function CalendarScreen() {
   const { t } = useTranslation();

@@ -26,6 +26,7 @@
   "days_few": "{{count}} дні",
   "days_many": "{{count}} дзён",
   "edit_cycle": "Рэдагаваць цыкл",
+  "already_selected_in_other_cycle": "Гэты дзень ужо выбраны ў іншым цыкле.",
   "calendar": {
     "monthNames": [
       "Студзень",

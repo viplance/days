@@ -26,6 +26,7 @@
   "days_few": "{{count}} дні",
   "days_many": "{{count}} днів",
   "edit_cycle": "Редагувати цикл",
+  "already_selected_in_other_cycle": "Цей день вже обраний в іншому циклі.",
   "calendar": {
     "monthNames": [
       "Січень",

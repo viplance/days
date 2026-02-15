@@ -26,6 +26,10 @@
   "days_few": "{{count}} дня",
   "days_many": "{{count}} дней",
   "edit_cycle": "Редактировать цикл",
+  "already_selected_in_other_cycle": "Этот день уже выбран в другом цикле.",
+  "cannot_select_future_date": "Нельзя выбрать дату в будущем.",
+  "end_must_be_after_start": "Дата окончания должна быть позже даты начала.",
+  "start_must_be_before_end": "Дата начала должна быть раньше даты окончания.",
   "calendar": {
     "monthNames": [
       "Январь",

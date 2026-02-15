@@ -25,6 +25,7 @@
   "days_one": "{{count}} día",
   "days_other": "{{count}} días",
   "edit_cycle": "Editar ciclo",
+  "already_selected_in_other_cycle": "Ya has seleccionado este día en otro ciclo.",
   "calendar": {
     "monthNames": [
       "Enero",

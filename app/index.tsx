@@ -24,6 +24,7 @@ export default function HomeScreen() {
     setLoading(true);
 
     const cycles = await Storage.getCycles();
+    const cycleLength = await Storage.getCycleLength();
 
     if (cycles.length > 0) {
       // Sort by startDate desc
@@ -34,6 +35,12 @@ export default function HomeScreen() {
       setLastCycle(cycles[0]);
     } else {
       setLastCycle(null);
+    }
+
+    if (cycles.length === 0 && cycleLength === null) {
+      setLoading(false);
+      router.replace('/onboarding');
+      return;
     }
 
     setLoading(false);

@@ -4,6 +4,7 @@ import { Cycle } from '../types/cycle.type';
 const CYCLE_KEY = 'days_cycles';
 const CONGRATS_KEY = 'days_congrats_seen';
 const LANGUAGE_KEY = 'days_language';
+const CYCLE_LENGTH_KEY = 'days_cycle_length';
 
 export const Storage = {
   async getCycles(): Promise<Cycle[]> {
@@ -52,5 +53,14 @@ export const Storage = {
 
   async setSeenCongrats(): Promise<void> {
     await AsyncStorage.setItem(CONGRATS_KEY, 'true');
+  },
+
+  async getCycleLength(): Promise<number | null> {
+    const val = await AsyncStorage.getItem(CYCLE_LENGTH_KEY);
+    return val ? parseInt(val, 10) : null;
+  },
+
+  async setCycleLength(length: number): Promise<void> {
+    await AsyncStorage.setItem(CYCLE_LENGTH_KEY, length.toString());
   },
 };

@@ -31,6 +31,8 @@
   "cannot_select_future_date": "Нельзя выбрать дату в будущем.",
   "end_must_be_after_start": "Дата окончания должна быть позже даты начала.",
   "start_must_be_before_end": "Дата начала должна быть раньше даты окончания.",
+  "cycle_length_question": "Сколько обычно длится твой цикл?",
+  "cycle_length_description": "Мы будем использовать стандартный 28-дневный цикл, если ты не уверена.",
   "calendar": {
     "monthNames": [
       "Январь",

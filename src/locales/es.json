@@ -27,6 +27,11 @@
   "days_other": "{{count}} días",
   "edit_cycle": "Editar ciclo",
   "already_selected_in_other_cycle": "Ya has seleccionado este día en otro ciclo.",
+  "cycle_length_question": "¿Cuánto dura tu ciclo habitualmente?",
+  "cycle_length_description": "Usaremos un ciclo estándar de 28 días si no estás segura.",
+  "cannot_select_future_date": "No se puede seleccionar una fecha futura.",
+  "end_must_be_after_start": "La fecha de fin debe ser posterior a la de inicio.",
+  "start_must_be_before_end": "La fecha de inicio debe ser anterior a la de fin.",
   "calendar": {
     "monthNames": [
       "Enero",

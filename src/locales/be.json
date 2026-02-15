@@ -28,6 +28,11 @@
   "days_many": "{{count}} дзён",
   "edit_cycle": "Рэдагаваць цыкл",
   "already_selected_in_other_cycle": "Гэты дзень ужо выбраны ў іншым цыкле.",
+  "cycle_length_question": "Колькі звычайна доўжыцца твой цыкл?",
+  "cycle_length_description": "Мы будзем выкарыстоўваць стандартны 28-дзённы цыкл, калі ты не ўпэўненая.",
+  "cannot_select_future_date": "Нельга выбраць дату ў будучыні.",
+  "end_must_be_after_start": "Дата заканчэння павінна быць пазней за дату пачатку.",
+  "start_must_be_before_end": "Дата пачатку павінна быць раней за дату заканчэння.",
   "calendar": {
     "monthNames": [
       "Студзень",

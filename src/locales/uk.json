@@ -28,6 +28,11 @@
   "days_many": "{{count}} днів",
   "edit_cycle": "Редагувати цикл",
   "already_selected_in_other_cycle": "Цей день вже обраний в іншому циклі.",
+  "cycle_length_question": "Скільки зазвичай триває твій цикл?",
+  "cycle_length_description": "Ми будемо використовувати стандартний 28-денний цикл, якщо ти не впевнена.",
+  "cannot_select_future_date": "Не можна обрати дату в майбутньому.",
+  "end_must_be_after_start": "Дата закінчення має бути пізніше за дату початку.",
+  "start_must_be_before_end": "Дата початку має бути раніше за дату закінчення.",
   "calendar": {
     "monthNames": [
       "Січень",

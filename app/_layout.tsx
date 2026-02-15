@@ -61,6 +61,10 @@ export default function RootLayout() {
           name="warning"
           options={{ presentation: 'modal', headerShown: false }}
         />
+        <Stack.Screen
+          name="onboarding"
+          options={{ presentation: 'modal', headerShown: false }}
+        />
       </Stack>
       <StatusBar style="dark" />
     </>

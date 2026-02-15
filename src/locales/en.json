@@ -30,6 +30,8 @@
   "cannot_select_future_date": "You cannot select a future date.",
   "end_must_be_after_start": "The end date must be after the start date.",
   "start_must_be_before_end": "The start date must be before the end date.",
+  "cycle_length_question": "How long is your cycle usually?",
+  "cycle_length_description": "We'll use a standard 28-day cycle if you're unsure.",
   "calendar": {
     "monthNames": [
       "January",

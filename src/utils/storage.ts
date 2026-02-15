@@ -37,7 +37,6 @@ export const Storage = {
     await this.saveCycles(updatedCycles);
   },
 
-
   async getLanguage(): Promise<string | null> {
     return await AsyncStorage.getItem(LANGUAGE_KEY);
   },

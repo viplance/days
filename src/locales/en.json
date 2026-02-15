@@ -13,6 +13,7 @@
   "check": "Check",
   "history": "Period History",
   "select_language": "Select Language",
+  "period": "Period",
   "period_start": "Period Start",
   "period_end": "Period End",
   "language_changed": "Language changed successfully",

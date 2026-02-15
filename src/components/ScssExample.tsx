@@ -1,6 +1,6 @@
-import React from "react";
-import { Text, View } from "react-native";
-import styles from "./ScssExample.scss";
+import React from 'react';
+import { Text, View } from 'react-native';
+import styles from './ScssExample.scss';
 
 export default function ScssExample() {
   return (

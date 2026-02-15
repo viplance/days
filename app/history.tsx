@@ -1,3 +1,4 @@
+import { Cycle } from '@/src/types/cycle.type';
 import { Ionicons } from '@expo/vector-icons';
 import {
   differenceInDays,
@@ -15,7 +16,7 @@ import { FlatList, Modal, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { v4 as uuidv4 } from 'uuid';
 import { Colors } from '../src/constants/colors';
-import { Cycle, Storage } from '../src/utils/storage';
+import { Storage } from '../src/utils/storage';
 
 const locales: Record<string, any> = { be, en: enUS, es, ru, uk };
 const today = format(new Date(), 'yyyy-MM-dd');
@@ -213,6 +214,7 @@ export default function HistoryScreen() {
             />
             <View className="flex-1">
               <Text className="text-lg text-text font-medium">
+                {t('period')}{' '}
                 {format(parseISO(item.startDate), 'MMM dd', {
                   locale: currentLocale,
                 })}{' '}

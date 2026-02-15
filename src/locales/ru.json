@@ -13,6 +13,7 @@
   "check": "Проверить",
   "history": "История",
   "select_language": "Выберите язык",
+  "period": "Месячные",
   "period_start": "Начало",
   "period_end": "Конец",
   "language_changed": "Язык успешно изменен",

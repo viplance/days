@@ -2,7 +2,7 @@ import { eachDayOfInterval, format, parseISO } from 'date-fns';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar, DateData } from 'react-native-calendars';
 import { v4 as uuidv4 } from 'uuid';
 import { Colors } from '../src/constants/colors';
@@ -114,11 +114,53 @@ export default function CalendarScreen() {
   };
 
   const handleSave = async () => {
+    // 1. Validate overlaps before saving
+    const cycles = await Storage.getCycles();
+    const cId = Array.isArray(cycleId) ? cycleId[0] : cycleId;
+
+    // Define the range we are trying to save
+    let newStart = selectedStartDate;
+    let newEnd = selectedEndDate;
+
+    if (mode === 'end') {
+      const current = cycles.find((c) => c.id === cId);
+      if (current) {
+        newStart = current.startDate;
+        // newEnd is already selectedEndDate
+      }
+    }
+
+    if (newStart) {
+      const start = newStart;
+      const end = newEnd || start; // Single day cycle if no end
+
+      const isOverlap = cycles.some((c) => {
+        // Skip the current cycle being edited
+        if (cId && c.id === cId) return false;
+
+        if (c.startDate) {
+          const cStart = c.startDate;
+          const cEnd = c.endDate || cStart;
+
+          // KEY CHANGE: "Do not check the cycles where cycle.end before the selected period start day"
+          if (cEnd < start) return false;
+
+          // Check intersection:
+          // (StartA <= EndB) and (EndA >= StartB)
+          return start <= cEnd && end >= cStart;
+        }
+        return false;
+      });
+
+      if (isOverlap) {
+        Alert.alert('', t('already_selected_in_other_cycle'));
+        return;
+      }
+    }
+
     if (mode === 'end') {
       if (!selectedEndDate) return;
       // Update existing cycle with selected end date
-      const cId = Array.isArray(cycleId) ? cycleId[0] : cycleId;
-      const cycles = await Storage.getCycles();
       const cycle = cycles.find((c) => c.id === cId);
       if (cycle) {
         cycle.endDate = selectedEndDate;

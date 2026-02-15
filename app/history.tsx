@@ -37,9 +37,7 @@ export default function HistoryScreen() {
   const [editStartDate, setEditStartDate] = useState('');
   const [editEndDate, setEditEndDate] = useState('');
   const [editMode, setEditMode] = useState<EditMode>('start-end');
-  // For start-end mode: tracks how many clicks have been made
-  // 0 = next click sets start, 1 = next click sets end, 2+ = alternates
-  const [clickCount, setClickCount] = useState(0);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const markedDates = useMemo(() => {
     if (!editStartDate) return {};
@@ -105,7 +103,7 @@ export default function HistoryScreen() {
       cycle.endDate && cycle.endDate > cycle.startDate ? cycle.endDate : '',
     );
     setEditMode(mode);
-    setClickCount(0);
+    setErrorMessage(null);
     setModalVisible(true);
   };
 
@@ -156,6 +154,34 @@ export default function HistoryScreen() {
 
   const saveEdit = async () => {
     if (!selectedCycle) return;
+
+    // Validate overlaps before saving
+    const start = editStartDate;
+    const end = editEndDate || start; // Single day cycle if no end
+
+    const isOverlap = cycles.some((c) => {
+      // Skip the current cycle being edited
+      if (c.id === selectedCycle.id) return false;
+
+      if (c.startDate) {
+        const cStart = c.startDate;
+        const cEnd = c.endDate || cStart;
+
+        // KEY CHANGE: "Do not check the cycles where cycle.end before the selected period start day"
+        if (cEnd < start) return false;
+
+        // Check intersection:
+        // (StartA <= EndB) and (EndA >= StartB)
+        return start <= cEnd && end >= cStart;
+      }
+      return false;
+    });
+
+    if (isOverlap) {
+      setErrorMessage(t('already_selected_in_other_cycle'));
+      return;
+    }
+
     const updated = {
       ...selectedCycle,
       startDate: editStartDate,
@@ -273,6 +299,12 @@ export default function HistoryScreen() {
                 todayTextColor: Colors.primary,
               }}
             />
+
+            {errorMessage && (
+              <Text className="text-red-500 text-center mt-2 font-medium">
+                {errorMessage}
+              </Text>
+            )}
 
             <View className="flex-row justify-between items-center mt-4">
               <TouchableOpacity onPress={deleteCycle} className="p-3">

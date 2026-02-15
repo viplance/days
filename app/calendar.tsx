@@ -20,8 +20,6 @@ export default function CalendarScreen() {
     null,
   );
   const [selectedEndDate, setSelectedEndDate] = useState<string | null>(null);
-  // For start-end mode: tracks click sequence
-  const [clickCount, setClickCount] = useState(0);
 
   // In 'end' mode, load the existing cycle's start date so we can show it
   useEffect(() => {
@@ -58,43 +56,30 @@ export default function CalendarScreen() {
         return;
       }
 
-      // start-end mode (or default): sequential click logic
-      if (clickCount === 0) {
-        // First click: set start date
+      // start-end mode (or default)
+      if (!selectedStartDate) {
+        // First selection
         setSelectedStartDate(dateString);
         setSelectedEndDate(null);
-        setClickCount(1);
-      } else if (clickCount === 1) {
-        // Second click: set end date (must be after start)
-        if (selectedStartDate && dateString <= selectedStartDate) {
-          // If before or same as start, treat as new start
+      } else if (!selectedEndDate) {
+        // Start exists, end missing
+        if (dateString < selectedStartDate) {
+          // Clicked before start -> shift start
           setSelectedStartDate(dateString);
-          setSelectedEndDate(null);
-          // Stay at clickCount 1
+        } else if (dateString === selectedStartDate) {
+          // Clicked start again -> toggle off
+          setSelectedStartDate(null);
         } else {
+          // Clicked after start -> set end
           setSelectedEndDate(dateString);
-          setClickCount(2);
         }
       } else {
-        // Subsequent clicks: alternate between start and end
-        if (clickCount % 2 === 0) {
-          // Edit start
-          if (selectedEndDate && dateString >= selectedEndDate) {
-            return; // Start must be before end
-          }
-          setSelectedStartDate(dateString);
-          setClickCount(clickCount + 1);
-        } else {
-          // Edit end
-          if (selectedStartDate && dateString <= selectedStartDate) {
-            return; // End must be after start
-          }
-          setSelectedEndDate(dateString);
-          setClickCount(clickCount + 1);
-        }
+        // Start and end both exist -> new start selection
+        setSelectedStartDate(dateString);
+        setSelectedEndDate(null);
       }
     },
-    [mode, selectedStartDate, selectedEndDate, clickCount],
+    [mode, selectedStartDate, selectedEndDate],
   );
 
   const getMarkedDates = () => {

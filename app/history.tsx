@@ -131,44 +131,27 @@ export default function HistoryScreen() {
         }
         setEditEndDate(dateString);
       } else {
-        // start-end mode: sequential click logic
-        if (clickCount === 0) {
-          // First click: set start date
+        // start-end mode
+        if (!editStartDate) {
           setEditStartDate(dateString);
           setEditEndDate('');
-          setClickCount(1);
-        } else if (clickCount === 1) {
-          // Second click: set end date (must be after start)
-          if (dateString <= editStartDate) {
-            // If before or same as start, treat as new start
+        } else if (!editEndDate) {
+          // Start exists, end missing
+          if (dateString < editStartDate) {
             setEditStartDate(dateString);
-            setEditEndDate('');
-            // Stay at clickCount 1, waiting for end
+          } else if (dateString === editStartDate) {
+            setEditStartDate('');
           } else {
             setEditEndDate(dateString);
-            setClickCount(2);
           }
         } else {
-          // Subsequent clicks: alternate between start and end
-          if (clickCount % 2 === 0) {
-            // Edit start
-            if (editEndDate && dateString >= editEndDate) {
-              return; // Start must be before end
-            }
-            setEditStartDate(dateString);
-            setClickCount(clickCount + 1);
-          } else {
-            // Edit end
-            if (dateString <= editStartDate) {
-              return; // End must be after start
-            }
-            setEditEndDate(dateString);
-            setClickCount(clickCount + 1);
-          }
+          // Start and end both exist -> new start selection
+          setEditStartDate(dateString);
+          setEditEndDate('');
         }
       }
     },
-    [editMode, editStartDate, editEndDate, clickCount],
+    [editMode, editStartDate, editEndDate],
   );
 
   const saveEdit = async () => {

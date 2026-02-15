@@ -32,6 +32,7 @@
   "start_must_be_before_end": "The start date must be before the end date.",
   "cycle_length_question": "How long is your cycle usually?",
   "cycle_length_description": "We'll use a standard 28-day cycle if you're unsure.",
+  "next_cycle_prediction": "Next cycle will start approximately {{date}}",
   "calendar": {
     "monthNames": [
       "January",

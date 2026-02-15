@@ -33,6 +33,7 @@
   "start_must_be_before_end": "Дата начала должна быть раньше даты окончания.",
   "cycle_length_question": "Сколько обычно длится твой цикл?",
   "cycle_length_description": "Мы будем использовать стандартный 28-дневный цикл, если ты не уверена.",
+  "next_cycle_prediction": "Следующий цикл будет примерно {{date}}",
   "calendar": {
     "monthNames": [
       "Январь",

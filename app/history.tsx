@@ -1,6 +1,7 @@
 import { Cycle } from '@/src/types/cycle.type';
 import { Ionicons } from '@expo/vector-icons';
 import {
+  addDays,
   differenceInDays,
   eachDayOfInterval,
   format,
@@ -30,6 +31,7 @@ export default function HistoryScreen() {
   const [selectedCycle, setSelectedCycle] = useState<Cycle | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [predictionDate, setPredictionDate] = useState<string | null>(null);
 
   // Editor state
   const [editStartDate, setEditStartDate] = useState('');
@@ -70,6 +72,26 @@ export default function HistoryScreen() {
         new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
     );
     setCycles(data);
+
+    let cycleLength = (await Storage.getCycleLength()) || 28;
+
+    if (data.length >= 2) {
+      const latestStart = parseISO(data[0].startDate);
+      const prevStart = parseISO(data[1].startDate);
+      const interval = Math.abs(differenceInDays(latestStart, prevStart));
+
+      if (interval >= 24 && interval <= 38) {
+        cycleLength = interval;
+        await Storage.setCycleLength(interval);
+      }
+    }
+
+    if (data.length > 0) {
+      const nextDate = addDays(parseISO(data[0].startDate), cycleLength);
+      setPredictionDate(format(nextDate, 'yyyy-MM-dd'));
+    } else {
+      setPredictionDate(null);
+    }
   };
 
   useFocusEffect(() => {
@@ -200,6 +222,18 @@ export default function HistoryScreen() {
           <Ionicons name="add-circle" size={32} color={Colors.primary} />
         </TouchableOpacity>
       </View>
+
+      {predictionDate && (
+        <View className="bg-primary/10 p-4 mb-6 rounded-xl border border-primary/20">
+          <Text className="text-primary font-medium text-center">
+            {t('next_cycle_prediction', {
+              date: format(parseISO(predictionDate), 'd MMM', {
+                locale: currentLocale,
+              }),
+            })}
+          </Text>
+        </View>
+      )}
 
       <FlatList
         data={cycles}

@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import i18n from 'i18next';
 import { useEffect, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
+import 'react-native-get-random-values';
 import '../global.css';
 import { Colors } from '../src/constants/colors';
 import initI18n from '../src/i18n';

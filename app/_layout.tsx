@@ -55,7 +55,11 @@ export default function RootLayout() {
         />
         <Stack.Screen
           name="language"
-          options={{ presentation: 'modal', title: '' }}
+          options={{
+            presentation: 'modal',
+            title: '',
+            headerRight: () => null,
+          }}
         />
         {/* Warning screen as modal or alert? User said "Screen". I'll use modal. */}
         <Stack.Screen

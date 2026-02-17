@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Image } from 'expo-image';
+
 import { useRouter } from 'expo-router';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import { Colors } from '../src/constants/colors';
 import { LANGUAGES } from '../src/i18n';
 import { updateCalendarLocale } from '../src/utils/calendar-i18n';
@@ -38,7 +38,7 @@ export default function LanguageScreen() {
                 <Image
                   source={item.flag}
                   className="w-full h-full"
-                  contentFit="cover"
+                  resizeMode="cover"
                 />
               </View>
               <Text className="text-lg text-text">{item.name}</Text>

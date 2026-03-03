@@ -274,6 +274,18 @@ export default function HistoryScreen() {
 
           const periodPct = Math.min(100, (periodLength / totalLength) * 100);
 
+          let todayPct = -1;
+          if (index === 0 && item.endDate) {
+            const daysSinceStart = differenceInDays(new Date(), startObj);
+            // Only show if today is between end of period and end of cycle
+            if (
+              daysSinceStart > periodLength - 1 &&
+              daysSinceStart < totalLength
+            ) {
+              todayPct = Math.min(100, (daysSinceStart / totalLength) * 100);
+            }
+          }
+
           return (
             <TouchableOpacity
               onPress={() => openEditor(item)}
@@ -290,14 +302,14 @@ export default function HistoryScreen() {
                 </Text>
               </View>
 
-              <View className="w-full h-6 relative justify-center">
-                <Text className="absolute left-0 text-xs text-gray-500 font-medium">
+              <View className="w-full h-10 relative justify-center">
+                <Text className="absolute left-0 top-0 text-xs text-gray-400 font-medium">
                   {format(startObj, 'dd MMM', { locale: currentLocale })}
                 </Text>
 
                 {item.endDate && (
                   <Text
-                    className="absolute text-xs text-secondary font-bold text-center w-16"
+                    className="absolute top-0 text-xs text-secondary font-bold text-center w-16"
                     style={{
                       left: `${periodPct}%`,
                       marginLeft: -32,
@@ -309,7 +321,17 @@ export default function HistoryScreen() {
                   </Text>
                 )}
 
-                <Text className="absolute right-0 text-xs text-gray-400 font-medium">
+                {todayPct >= 0 && (
+                  <Text
+                    className="absolute top-0 text-xs text-primary font-bold text-center w-16"
+                    style={{
+                      left: `${todayPct}%`,
+                      marginLeft: -32,
+                    }}
+                  ></Text>
+                )}
+
+                <Text className="absolute right-0 top-0 text-xs text-gray-400 font-medium">
                   {format(endCycleObj, 'dd MMM', { locale: currentLocale })}
                 </Text>
               </View>
@@ -326,6 +348,13 @@ export default function HistoryScreen() {
                   <View
                     className="w-3 h-3 rounded-full bg-secondary absolute"
                     style={{ left: `${periodPct}%`, marginLeft: -6 }}
+                  />
+                )}
+
+                {todayPct >= 0 && (
+                  <View
+                    className="w-1.5 h-4 bg-primary absolute rounded-full"
+                    style={{ left: `${todayPct}%`, marginLeft: -3 }}
                   />
                 )}
 

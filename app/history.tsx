@@ -32,6 +32,7 @@ export default function HistoryScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [predictionDate, setPredictionDate] = useState<string | null>(null);
+  const [averageCycleLength, setAverageCycleLength] = useState(28);
 
   // Editor state
   const [editStartDate, setEditStartDate] = useState('');
@@ -83,6 +84,8 @@ export default function HistoryScreen() {
         await Storage.setCycleLength(interval);
       }
     }
+
+    setAverageCycleLength(cycleLength);
 
     if (data.length > 0) {
       const nextDate = addDays(parseISO(data[0].startDate), cycleLength);
@@ -247,38 +250,90 @@ export default function HistoryScreen() {
       <FlatList
         data={cycles}
         keyExtractor={(item) => item.id}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            onPress={() => openEditor(item)}
-            className="bg-white p-4 mb-2 rounded-lg flex-row items-center shadow-sm"
-          >
-            <View
-              className={`w-3 h-3 rounded-full mr-4 ${index === 0 ? 'bg-secondary' : 'bg-gray-400'}`}
-            />
-            <View className="flex-1">
-              <Text className="text-lg text-text font-medium">
-                {t('period')}{' '}
-                {format(parseISO(item.startDate), 'MMM dd', {
-                  locale: currentLocale,
-                })}{' '}
-                -{' '}
-                {item.endDate
-                  ? format(parseISO(item.endDate), 'MMM dd', {
-                      locale: currentLocale,
-                    })
-                  : '...'}
-              </Text>
-              <Text className="text-gray-400 text-sm">
-                {format(parseISO(item.startDate), 'yyyy')}
-              </Text>
-            </View>
-            <Text
-              className={`${index === 0 ? 'text-secondary' : 'text-gray-400'} font-medium text-right`}
+        renderItem={({ item, index }) => {
+          const startObj = parseISO(item.startDate);
+
+          let totalLength = averageCycleLength;
+          let endCycleObj = addDays(startObj, averageCycleLength);
+
+          if (index > 0 && cycles[index - 1]) {
+            endCycleObj = parseISO(cycles[index - 1].startDate);
+            totalLength = Math.max(
+              1,
+              Math.abs(differenceInDays(endCycleObj, startObj)),
+            );
+          }
+
+          let periodLength = 0;
+          if (item.endDate) {
+            periodLength = Math.max(
+              1,
+              Math.abs(differenceInDays(parseISO(item.endDate), startObj)) + 1,
+            );
+          }
+
+          const periodPct = Math.min(100, (periodLength / totalLength) * 100);
+
+          return (
+            <TouchableOpacity
+              onPress={() => openEditor(item)}
+              className="bg-white p-4 mb-3 rounded-xl border border-gray-100 shadow-sm"
             >
-              {getCycleDay(index)}
-            </Text>
-          </TouchableOpacity>
-        )}
+              <View className="flex-row justify-between mb-4">
+                <Text className="text-lg font-bold text-gray-800">
+                  {format(startObj, 'MMMM yyyy', { locale: currentLocale })}
+                </Text>
+                <Text
+                  className={`${index === 0 ? 'text-secondary' : 'text-gray-400'} font-bold`}
+                >
+                  {getCycleDay(index)}
+                </Text>
+              </View>
+
+              <View className="w-full h-6 relative justify-center">
+                <Text className="absolute left-0 text-xs text-gray-500 font-medium">
+                  {format(startObj, 'dd MMM', { locale: currentLocale })}
+                </Text>
+
+                {item.endDate && (
+                  <Text
+                    className="absolute text-xs text-secondary font-bold text-center w-16"
+                    style={{
+                      left: `${periodPct}%`,
+                      marginLeft: -32,
+                    }}
+                  >
+                    {format(parseISO(item.endDate), 'dd MMM', {
+                      locale: currentLocale,
+                    })}
+                  </Text>
+                )}
+
+                <Text className="absolute right-0 text-xs text-gray-400 font-medium">
+                  {format(endCycleObj, 'dd MMM', { locale: currentLocale })}
+                </Text>
+              </View>
+
+              <View className="w-full h-2 bg-gray-100 rounded-full my-2 flex-row items-center relative">
+                <View
+                  className="h-full bg-secondary rounded-full absolute left-0"
+                  style={{ width: `${periodPct}%` }}
+                />
+
+                <View className="w-3 h-3 rounded-full bg-secondary absolute -left-1" />
+
+                {item.endDate && (
+                  <View
+                    className="w-3 h-3 rounded-full bg-secondary absolute"
+                    style={{ left: `${periodPct}%`, marginLeft: -6 }}
+                  />
+                )}
+
+                <View className="w-3 h-3 rounded-full bg-gray-300 absolute -right-1" />
+              </View>
+            </TouchableOpacity>
+          );
+        }}
       />
 
       {/* Edit Modal */}

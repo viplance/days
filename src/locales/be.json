@@ -26,7 +26,7 @@
   "days_one": "{{count}} дзень",
   "days_few": "{{count}} дні",
   "days_many": "{{count}} дзён",
-  "edit_cycle": "Рэдагаваць цыкл",
+  "edit_period": "Рэдагаваць месячныя",
   "already_selected_in_other_cycle": "Гэты дзень ужо выбраны ў іншым цыкле.",
   "cycle_length_question": "Колькі звычайна доўжыцца твой цыкл?",
   "cycle_length_description": "Мы будзем выкарыстоўваць стандартны 28-дзённы цыкл, калі ты не ўпэўненая.",

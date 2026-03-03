@@ -25,7 +25,7 @@
   "cycle_day": "Día {{day}} del ciclo",
   "days_one": "{{count}} día",
   "days_other": "{{count}} días",
-  "edit_cycle": "Editar ciclo",
+  "edit_period": "Editar periodo",
   "already_selected_in_other_cycle": "Ya has seleccionado este día en otro ciclo.",
   "cycle_length_question": "¿Cuánto dura tu ciclo habitualmente?",
   "cycle_length_description": "Usaremos un ciclo estándar de 28 días si no estás segura.",

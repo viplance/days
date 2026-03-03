@@ -26,14 +26,14 @@
   "days_one": "{{count}} день",
   "days_few": "{{count}} дня",
   "days_many": "{{count}} дней",
-  "edit_cycle": "Редактировать цикл",
+  "edit_period": "Редактировать месячные",
   "already_selected_in_other_cycle": "Этот день уже выбран в другом цикле.",
   "cannot_select_future_date": "Нельзя выбрать дату в будущем.",
   "end_must_be_after_start": "Дата окончания должна быть позже даты начала.",
   "start_must_be_before_end": "Дата начала должна быть раньше даты окончания.",
   "cycle_length_question": "Сколько обычно длится твой цикл?",
   "cycle_length_description": "Мы будем использовать стандартный 28-дневный цикл, если ты не уверена.",
-  "next_cycle_prediction": "Следующий цикл будет примерно {{date}}",
+  "next_cycle_prediction": "Следующий цикл начнётся примерно {{date}}",
   "calendar": {
     "monthNames": [
       "Январь",

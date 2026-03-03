@@ -281,7 +281,7 @@ export default function HistoryScreen() {
             >
               <View className="flex-row justify-between mb-4">
                 <Text className="text-lg font-bold text-gray-800">
-                  {format(startObj, 'MMMM yyyy', { locale: currentLocale })}
+                  {format(startObj, 'yyyy', { locale: currentLocale })}
                 </Text>
                 <Text
                   className={`${index === 0 ? 'text-secondary' : 'text-gray-400'} font-bold`}
@@ -341,7 +341,7 @@ export default function HistoryScreen() {
         <View className="flex-1 bg-black/50 justify-center p-4">
           <View className="bg-white rounded-xl p-4 shadow-lg h-5/6">
             <Text className="text-xl font-bold text-center mb-4">
-              {t('edit_cycle')}
+              {t('edit_period')}
             </Text>
 
             <Calendar

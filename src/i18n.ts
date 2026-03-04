@@ -1,5 +1,5 @@
 import * as Localization from 'expo-localization';
-import i18n from 'i18next';
+import i18next from 'i18next';
 import 'intl-pluralrules';
 import { initReactI18next } from 'react-i18next';
 import { Storage } from './utils/storage';
@@ -29,12 +29,12 @@ const resources = {
 const initI18n = async () => {
   const savedLanguage = await Storage.getLanguage();
   const systemLanguage = Localization.getLocales()
-    .map((locale) => locale.languageCode)
-    .find((code) => code && Object.keys(resources).includes(code));
+    .map((locale: any) => locale.languageCode)
+    .find((code: any) => code && Object.keys(resources).includes(code));
 
   const languageToUse = savedLanguage || systemLanguage || 'en';
 
-  i18n.use(initReactI18next).init({
+  i18next.use(initReactI18next).init({
     resources,
     lng: languageToUse,
     fallbackLng: 'en',

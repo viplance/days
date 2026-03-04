@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 
 import { useRouter } from 'expo-router';
-import i18n from 'i18next';
+import { changeLanguage as i18nChangeLanguage } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import { Colors } from '../src/constants/colors';
@@ -10,11 +10,11 @@ import { updateCalendarLocale } from '../src/utils/calendar-i18n';
 import { Storage } from '../src/utils/storage';
 
 export default function LanguageScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
 
   const changeLanguage = async (langCode: string) => {
-    await i18n.changeLanguage(langCode);
+    await i18nChangeLanguage(langCode);
     updateCalendarLocale(langCode);
     await Storage.setLanguage(langCode);
     router.back();

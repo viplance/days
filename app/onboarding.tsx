@@ -34,14 +34,15 @@ export default function OnboardingScreen() {
     const initialIndex = numbers.indexOf(28);
     if (initialIndex >= 0) {
       // We need to wait a bit for layout
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         flatListRef.current?.scrollToIndex({
           index: initialIndex,
           animated: false,
         });
       }, 100);
+      return () => clearTimeout(timer);
     }
-  }, []);
+  }, [numbers]);
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;

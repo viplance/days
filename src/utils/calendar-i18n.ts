@@ -1,24 +1,24 @@
-import i18n from 'i18next';
+import { t } from 'i18next';
 import { LocaleConfig } from 'react-native-calendars';
 
 export const updateCalendarLocale = (lang: string) => {
-  const monthNames = i18n.t('calendar.monthNames', {
+  const monthNames = t('calendar.monthNames', {
     lng: lang,
     returnObjects: true,
   }) as string[];
-  const monthNamesShort = i18n.t('calendar.monthNamesShort', {
+  const monthNamesShort = t('calendar.monthNamesShort', {
     lng: lang,
     returnObjects: true,
   }) as string[];
-  const dayNames = i18n.t('calendar.dayNames', {
+  const dayNames = t('calendar.dayNames', {
     lng: lang,
     returnObjects: true,
   }) as string[];
-  const dayNamesShort = i18n.t('calendar.dayNamesShort', {
+  const dayNamesShort = t('calendar.dayNamesShort', {
     lng: lang,
     returnObjects: true,
   }) as string[];
-  const today = i18n.t('calendar.today', { lng: lang }) as string;
+  const today = t('calendar.today', { lng: lang }) as string;
 
   if (Array.isArray(monthNames) && Array.isArray(dayNames)) {
     LocaleConfig.locales[lang] = {

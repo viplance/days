@@ -20,7 +20,7 @@ export default function HomeScreen() {
   const [lastCycle, setLastCycle] = useState<Cycle | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
 
     const cycles = await Storage.getCycles();
@@ -59,12 +59,12 @@ export default function HomeScreen() {
         router.push({ pathname: '/history', params: {} });
       }
     }
-  };
+  }, [router]);
 
   useFocusEffect(
     useCallback(() => {
       loadData();
-    }, []),
+    }, [loadData]),
   );
 
   const handleYes = async () => {

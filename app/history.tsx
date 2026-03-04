@@ -286,6 +286,12 @@ export default function HistoryScreen() {
             }
           }
 
+          let endDayMarginLeft = 0;
+          if (periodLength < 2) endDayMarginLeft = 20;
+          if (periodLength < 5) endDayMarginLeft = 12;
+          if (periodLength > 5) endDayMarginLeft = -8;
+          if (periodLength > 8) endDayMarginLeft = -32;
+
           return (
             <TouchableOpacity
               onPress={() => openEditor(item)}
@@ -312,7 +318,7 @@ export default function HistoryScreen() {
                     className="absolute top-0 text-xs text-secondary font-bold text-center w-16"
                     style={{
                       left: `${periodPct}%`,
-                      marginLeft: -32,
+                      marginLeft: endDayMarginLeft,
                     }}
                   >
                     {format(parseISO(item.endDate), 'dd MMM', {

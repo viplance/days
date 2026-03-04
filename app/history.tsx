@@ -66,10 +66,12 @@ export default function HistoryScreen() {
   const loadCycles = async () => {
     const data = await Storage.getCycles();
     // Sort DESC
-    data.sort(
-      (a, b) =>
-        new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
-    );
+    data
+      .filter((c) => c.startDate)
+      .sort(
+        (a, b) =>
+          new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+      );
     setCycles(data);
 
     let cycleLength = (await Storage.getCycleLength()) || 28;
@@ -87,7 +89,7 @@ export default function HistoryScreen() {
 
     setAverageCycleLength(cycleLength);
 
-    if (data.length > 0) {
+    if (data.length > 0 && data[0].startDate) {
       const nextDate = addDays(parseISO(data[0].startDate), cycleLength);
       setPredictionDate(format(nextDate, 'yyyy-MM-dd'));
     } else {
@@ -251,6 +253,8 @@ export default function HistoryScreen() {
         data={cycles}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => {
+          if (!item.startDate) return null;
+
           const startObj = parseISO(item.startDate);
 
           let totalLength = averageCycleLength;
@@ -286,11 +290,8 @@ export default function HistoryScreen() {
             }
           }
 
-          let endDayMarginLeft = 0;
-          if (periodLength < 2) endDayMarginLeft = 20;
-          if (periodLength < 5) endDayMarginLeft = 12;
-          if (periodLength > 5) endDayMarginLeft = -8;
-          if (periodLength > 8) endDayMarginLeft = -32;
+          let endDayMarginLeft = 40;
+          if (periodLength > 8) endDayMarginLeft = 40;
 
           return (
             <TouchableOpacity
@@ -337,14 +338,16 @@ export default function HistoryScreen() {
                   ></Text>
                 )}
 
-                <Text className="absolute right-0 top-0 text-xs text-gray-400 font-medium">
-                  {format(endCycleObj, 'dd MMM', { locale: currentLocale })}
-                </Text>
+                {Object.keys(endCycleObj).length > 0 && (
+                  <Text className="absolute right-0 top-0 text-xs text-gray-400 font-medium">
+                    {format(endCycleObj, 'dd MMM', { locale: currentLocale })}
+                  </Text>
+                )}
               </View>
 
               <View className="w-full h-2 bg-gray-100 rounded-full my-2 flex-row items-center relative">
                 <View
-                  className="h-full bg-secondary rounded-full absolute left-0"
+                  className="h-2 bg-secondary rounded-full absolute left-0"
                   style={{ width: `${periodPct}%` }}
                 />
 

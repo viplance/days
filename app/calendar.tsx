@@ -186,6 +186,8 @@ export default function CalendarScreen() {
     }
   };
 
+  const isSaveDisabled = Boolean(!selectedStartDate);
+
   return (
     <View className="flex-1 bg-background p-4 pt-10">
       <Text className="text-2xl font-bold text-center text-primary mb-2">
@@ -215,7 +217,8 @@ export default function CalendarScreen() {
 
       <TouchableOpacity
         onPress={handleSave}
-        className="bg-primary py-4 rounded-xl mt-8 mx-4"
+        disabled={isSaveDisabled}
+        className={`py-4 rounded-xl mt-8 mx-4 ${isSaveDisabled ? 'bg-gray-300' : 'bg-primary'}`}
       >
         <Text className="text-white text-center font-bold text-lg">
           {t('save')}

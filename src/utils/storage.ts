@@ -65,6 +65,10 @@ export const Storage = {
   },
 
   async saveCycle(cycle: Cycle): Promise<void> {
+    if (!cycle.startDate) {
+      console.warn('Attempted to save cycle without startDate', cycle);
+      return;
+    }
     const cycles = await this.getCycles();
     const existingIndex = cycles.findIndex((c) => c.id === cycle.id);
     if (existingIndex >= 0) {

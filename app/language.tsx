@@ -37,7 +37,7 @@ export default function LanguageScreen() {
               <View className="w-8 h-8 mr-4 overflow-hidden rounded-full">
                 <Image
                   source={item.flag}
-                  className="w-full h-full"
+                  style={{ width: 32, height: 32 }}
                   resizeMode="cover"
                 />
               </View>
